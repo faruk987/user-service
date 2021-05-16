@@ -5,11 +5,12 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.Entity;
 
 @Entity
-public class User extends PanacheEntity{
-    private String username;
-    private String password;
-    private String email;
-    private double credit;
+public class Person extends PanacheEntity{
+    public String username;
+    public String password;
+    public String role;
+    public String email;
+    public double wallet;
 
     public String getUsername() {
         return username;
@@ -27,6 +28,14 @@ public class User extends PanacheEntity{
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -35,11 +44,11 @@ public class User extends PanacheEntity{
         this.email = email;
     }
 
-    public double getCredit() {
-        return credit;
+    public double getWallet() {
+        return wallet;
     }
 
-    public void setCredit(double credit) {
-        this.credit = credit;
+    public void setWallet(double wallet) {
+        this.wallet = wallet;
     }
 }
