@@ -16,6 +16,10 @@ public class Person extends PanacheEntity{
         return find("email", email).firstResult();
     }
 
+    public static Person findByUsername(String username){
+        return find("username", username).firstResult();
+    }
+
     //Getters and setters
     public String getUsername() {
         return username;
