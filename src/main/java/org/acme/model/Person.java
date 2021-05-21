@@ -12,6 +12,11 @@ public class Person extends PanacheEntity{
     public String email;
     public double wallet;
 
+    public static Person findByEmail(String email){
+        return find("email", email).firstResult();
+    }
+
+    //Getters and setters
     public String getUsername() {
         return username;
     }
