@@ -50,4 +50,23 @@ public class MessageHandler {
         String json = Json.encode(userWallet);
         userwalletEmitter.send(json);
     }
+
+    @Incoming("inlay")
+    @Blocking
+    @Transactional
+    public void payForInlay(Object result){
+        String jsonvalue = Json.decodeValue((String) result).toString();
+        UserWallet userWallet = Json.decodeValue(jsonvalue, UserWallet.class);
+
+        System.out.println("gebruiker: " + userWallet.getUsername() + " moet " + userWallet.getWallet() + " betalen");
+
+        Person person = Person.findByUsername(userWallet.getUsername());
+        double credit = person.getWallet() - userWallet.getWallet();
+
+        try {
+            person.setWallet(credit);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }
