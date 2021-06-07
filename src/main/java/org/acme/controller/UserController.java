@@ -1,5 +1,6 @@
 package org.acme.controller;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
 import org.acme.service.UserService;
 
 import javax.annotation.security.RolesAllowed;
@@ -12,12 +13,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@Path("/")
+@Path("/user")
 public class UserController {
     @Inject
     UserService userService;
 
-    @GET
+ /*   @GET
     @Path("/admin")
     @RolesAllowed("admin")
     @Produces(MediaType.TEXT_PLAIN)
@@ -32,6 +33,15 @@ public class UserController {
     @Produces(MediaType.TEXT_PLAIN)
     public String me(@Context SecurityContext securityContext) {
         return securityContext.getUserPrincipal().getName();
+    }*/
+
+    @GET
+    @Path("/login")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String login(@QueryParam("username") String username,
+                        @QueryParam("password") String password) throws Exception {
+
+        return userService.authenticateUser(username, password);
     }
 
     @POST
@@ -53,9 +63,9 @@ public class UserController {
     @Path("/update/password")
     @Produces(MediaType.TEXT_PLAIN)
     public Object updatePassword(@QueryParam("password") String password,
-                            @QueryParam("email") String email) {
+                            @QueryParam("username") String username) {
         try {
-            userService.updatePassword(password,email);
+            userService.updatePassword(password,username);
             return Response.ok();
         }catch (KeyAlreadyExistsException e){
             return Response.status(403, "Some values are not accepted");
