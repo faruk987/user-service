@@ -23,15 +23,14 @@ public class TokenService {
     public String generateToken(String email,  String... roles) {
         try {
             JwtClaims jwtClaims = new JwtClaims();
-            jwtClaims.setIssuer("Faruk"); // change to your company
+            jwtClaims.setIssuer("Faruk");
             jwtClaims.setJwtId(UUID.randomUUID().toString());
             jwtClaims.setSubject(email);
             jwtClaims.setClaim(Claims.upn.name(), email);
-            jwtClaims.setClaim(Claims.preferred_username.name(), email); //add more
+            jwtClaims.setClaim(Claims.preferred_username.name(), email);
             jwtClaims.setClaim(Claims.groups.name(), Arrays.asList(roles));
             jwtClaims.setAudience("using-jwt");
-            jwtClaims.setExpirationTimeMinutesInTheFuture(60); // TODO specify how long do you need
-
+            jwtClaims.setExpirationTimeMinutesInTheFuture(60);
 
             String token = TokenUtils.generateTokenString(jwtClaims);
             LOGGER.info("TOKEN generated: " + token);

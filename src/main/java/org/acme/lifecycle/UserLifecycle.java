@@ -1,3 +1,4 @@
+/*
 package org.acme.lifecycle;
 
 import com.orbitz.consul.Consul;
@@ -60,3 +61,4 @@ public class UserLifecycle {
 	}
 
 }
+*/

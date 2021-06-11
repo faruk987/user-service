@@ -1,3 +1,4 @@
+/*
 package org.acme.config;
 
 import com.orbitz.consul.Consul;
@@ -12,3 +13,4 @@ public class UserBeansProducer {
 	Consul consulClient = Consul.builder().build();
 
 }
+*/
