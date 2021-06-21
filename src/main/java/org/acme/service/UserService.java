@@ -88,10 +88,15 @@ public class UserService {
     public void deleteUser(String username){
         if (userExists(username)){
             Person person = Person.findByUsername(username);
-            person.delete();
+            System.out.println(person.getUsername());
+            if(person.isPersistent()){
+                person.delete();
+            }
         }else {
             throw new KeyAlreadyExistsException();
         }
+
+        System.out.println(Person.findAll().count());
     }
 
     public String authenticateUser(String username, String password) throws Exception {

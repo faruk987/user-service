@@ -28,12 +28,15 @@ public class MessageHandler {
         double credit = person.getWallet() + betResult.getResult();
 
         try {
+            System.out.println("I got this from the gamble-service: " + credit);
             person.setWallet(credit);
+            System.out.println("wllet is now: " + person.getWallet());
+            person.persist();
         }catch (Exception e){
             System.out.println(e);
         }
 
-        System.out.println("I got this from the gamble-service: " + credit);
+
     }
 
     @Inject
