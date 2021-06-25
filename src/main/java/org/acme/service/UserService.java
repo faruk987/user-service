@@ -10,6 +10,8 @@ import org.wildfly.security.password.WildFlyElytronPasswordProvider;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.management.openmbean.KeyAlreadyExistsException;
+import javax.ws.rs.NotFoundException;
+
 import org.wildfly.security.password.Password;
 import org.wildfly.security.password.PasswordFactory;
 import org.wildfly.security.password.interfaces.BCryptPassword;
@@ -24,6 +26,9 @@ public class UserService {
 
     @Inject
     TokenService tokenService;
+
+    @Inject
+    ForgetUserService forgetUserService;
 
     private boolean emailExists(String email) {
         Person person = Person.findByEmail(email);
@@ -81,22 +86,17 @@ public class UserService {
             Person person = Person.findByUsername(username);
             person.setWallet(credit);
         }else {
-            throw new KeyAlreadyExistsException();
+            throw new NotFoundException();
         }
     }
 
     public void deleteUser(String username){
         if (userExists(username)){
-            Person person = Person.findByUsername(username);
-            System.out.println(person.getUsername());
-            if(person.isPersistent()){
-                person.delete();
-            }
+            Person.delete("username", username);
+            forgetUserService.forgetUser(username);
         }else {
-            throw new KeyAlreadyExistsException();
+            throw new NotFoundException();
         }
-
-        System.out.println(Person.findAll().count());
     }
 
     public String authenticateUser(String username, String password) throws Exception {
